@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int maximumRequests(int n, vector<vector<int>>& requests) {
+        int i=0;
+        int m=requests.size();
+        int ans=0;
+        for(int i=0;i<(2<<m);i++){
+            vector<int>aux(n,0);
+            int cont=0;
+            for(int j=0;j<m;j++){
+                if((i&(1<<j))>0){
+                    aux[requests[j][0]]--;
+                    aux[requests[j][1]]++;
+                    cont++;
+                }
+            }
+            bool ok=true;
+            for(int j=0;j<n;j++){
+                if(aux[j]!=0){
+                    ok=false;break;
+                }
+            }
+            if(ok){
+                ans=max(ans,cont);
+            }
+        }
+        return ans;
+    }
+};
