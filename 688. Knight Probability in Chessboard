@@ -1,0 +1,29 @@
+class Solution {
+public:
+vector<pair<int,int>>pos={{-2,1},{-1,2},{1,2},{2,1},{2,-1},{1,-2},{-1,-2},{-2,-1}};
+double dp[26][26][104];
+    double getp(int &n, int i,int j,int k){
+        if(k==0){
+            return 1;
+        }
+        if(dp[i][j][k]!=0){
+           return dp[i][j][k];
+        }
+        double times=0;
+        int all=8;
+        for(auto p:pos){
+            int x=i+p.first;
+            int y=j+p.second;
+            if(x>=0&&x<n&&y>=0&&y<n){
+                times+=getp(n,x,y,k-1);
+            }
+        }
+        times/=all;
+        dp[i][j][k]=times;
+        return times;
+    }
+    double knightProbability(int n, int k, int row, int column) {
+        memset(dp,sizeof(dp),0.0);
+        return getp(n,row,column,k);
+    }
+};
